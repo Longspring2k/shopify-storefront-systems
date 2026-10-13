@@ -1,49 +1,38 @@
-# Shopify Storefront Systems
+# Collection filter state system
 
-Storefront implementation and refinement across native Shopify page templates, merchant-editable sections, predictive search and collection filtering.
+This repository contains an original, dependency-free demonstration of one narrow storefront concern: **schema-bound collection URLs, explicit draft/apply controls, and race-safe asynchronous rendering**.
 
-**Technical showcase · Documentation only · Anonymized**
+It is a synthetic engineering sample, not a Shopify theme export, Liquid rendering test, merchant catalog, or claim about Shopify API guarantees.
 
-Shopify Online Store 2.0 | Liquid | JavaScript | CSS | Shopify CLI | Playwright
+## Run
 
-## Engineering problem
+Requires Node.js 20 or newer.
 
-Storefront changes must work together across the header, product pages, collection controls and cart while remaining editable through the Theme Editor. A fix at one viewport must not disturb the shared layout at another.
-
-## Implementation scope
-
-- Worked across homepage, product, collection and cart template composition using native theme surfaces.
-- Implemented and refined predictive search with combobox/listbox behavior, keyboard navigation and Escape handling.
-- Integrated Shopify suggestion responses into distinct suggestion and product groups.
-- Refined collection filtering, popup state, active-filter controls and loading feedback.
-- Used focused browser geometry checks and remote theme readbacks to separate source changes from rendered behavior.
-
-## Architecture at a glance
-
-The following is an illustrative technical flow, not a client screenshot or a deployment topology.
-
-```mermaid
-flowchart TD
-    N0["Theme Editor and JSON templates"]
-    N1["Liquid sections and snippets"]
-    N0 --> N1
-    N2["Shared CSS and JavaScript"]
-    N1 --> N2
-    N3["Shopify storefront responses"]
-    N2 --> N3
-    N4["Responsive interactions"]
-    N3 --> N4
+```sh
+node --test
+node demo/run.mjs
+node demo/server.mjs
 ```
 
-## Evidence and delivery boundary
+`demo/server.mjs` listens on `127.0.0.1:4176`. Override with `PORT=4180 node demo/server.mjs`, then open the printed loopback URL.
 
-Implemented storefront contributions with feature-level runtime and theme-readback evidence.
+## What is demonstrated
 
-Retained runtime evidence records successful predictive-search responses and rendered groups. Additional browser checks target filter geometry and state. These are focused observations, not an exhaustive storefront audit.
+- Repeatable, allowlisted facets with deduplication and canonical ordering.
+- Allowlisted sort values, bounded pagination, and preservation of only `utm_source`.
+- Explicit draft Apply/Cancel for facets and sort, a visible pending-draft notice, page reset on filter change, sort-preserving Clear, and one-value chips.
+- Back/forward restoration without creating history loops.
+- Abort plus request sequence checks, bounded response validation, retry, empty and error states, and canonical server-page reconciliation via `replaceState`.
+- Text-only synthetic product cards; no links, cart, checkout, external assets, or purchase flow.
 
-## Read more
+## File map
 
-- [Engineering decisions](docs/engineering.md)
-- [Scope and evidence boundaries](docs/scope.md)
+- `src/query-state.mjs` — exact URL schema, parse/serialize, and transitions.
+- `src/controller.mjs` — draft/applied ownership, history, cancellation and latest-request-wins.
+- `src/catalog.mjs` — server-only synthetic catalog.
+- `demo/` — loopback server and responsive browser UI.
+- `test/` — deterministic Node tests, including deferred promise races.
+- `docs/engineering.md` — state transitions, race model, errors, and alternatives.
+- `docs/scope.md` — demonstration versus Shopify adapter boundary.
 
-> This repository describes verified implementation work at a technical level. Original source, identities, business data and visual assets are intentionally omitted. It is not an installable application or a claim that the original private implementation is open source.
+No dependencies, CI workflow, license grant, original theme source, original assets, or client identity are included.

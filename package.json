@@ -1,0 +1,10 @@
+{
+  "name": "shopify-storefront-systems-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "demo": "node demo/run.mjs",
+    "serve": "node demo/server.mjs"
+  }
+}

@@ -1,22 +1,21 @@
 # Scope and evidence boundaries
 
-## Documented state
+## Source proof
 
-Implemented storefront contributions with feature-level runtime and theme-readback evidence.
+The source and Node tests demonstrate query canonicalization, state transitions, latest-request-wins, response validation, retry/disposal behavior, route restrictions, and a synthetic browser UI. The HTTP server is local demonstration infrastructure.
 
-## Evidence basis
+## Shopify adapter boundary — not implemented
 
-Retained runtime evidence records successful predictive-search responses and rendered groups. Additional browser checks target filter geometry and state. These are focused observations, not an exhaustive storefront audit.
+A real Shopify Online Store 2.0 integration needs a separately tested adapter to derive actual facets, translate state into supported storefront or Section Rendering requests, validate returned fragments, reconcile pagination/canonical URLs/locales, handle Theme Editor section lifecycle events, preserve merchant settings, and run against a development theme.
 
-The public narrative was prepared against retained implementation and verification artifacts. Those private references are not redistributed. Source inspection, recorded test results, staging observations and production deployment are different levels of evidence; none is silently substituted for another.
+The Node fixture is not Liquid output, the endpoint is not a Shopify endpoint, and no Liquid is included because there is no theme runtime here in which to validate it.
 
-## Not claimed or distributed
+## Claims not made
 
-- Contribution covers the documented implementation and refinement, not authorship of every inherited base-theme file.
-- No theme export, merchant data, catalog, original screenshots or commercial outcome metrics are included.
+- No live store, Theme Editor, Section Rendering API, storefront API, cart, checkout, or purchase flow was exercised.
+- No original client theme, source, assets, identity, catalog, screenshot, credential, or inherited code is included.
+- No accessibility certification or performance target is claimed.
+- No commercial outcomes or customer endorsement are asserted.
+- No external packages, CI configuration, or license grant are included.
 
-## Public repository boundary
-
-Only newly written technical documentation and illustrative diagrams are included. There are no original application source files, datasets, screenshots, deployment scripts, credentials or inherited Git history. No business-performance figures or customer endorsements are asserted.
-
-The repository is intended for technical review of the engineering approach. It makes no grant of rights to the original private implementation or third-party dependencies.
+`node --test` is executable logic/server evidence. `node demo/run.mjs` is an HTTP smoke check. `node demo/server.mjs` is a manual browser demonstration. None substitutes for validation in a real Shopify theme.
